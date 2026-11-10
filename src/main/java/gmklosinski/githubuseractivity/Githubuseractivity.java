@@ -1,16 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package gmklosinski.githubuseractivity;
 
-/**
- *
- * @author gk
- */
 public class Githubuseractivity {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        try {
+            var activity = new Activity(args);
+            activity.fetch();
+            activity.prettyPrint();
+        }
+        catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 }
