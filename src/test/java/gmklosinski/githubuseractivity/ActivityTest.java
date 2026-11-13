@@ -24,4 +24,12 @@ class ActivityTest {
             }
         );
     }
+
+    @org.junit.jupiter.api.Test
+    void creationWithTwoArgumentsThrows() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new Activity(new String[]{})
+        );
+    }
 }
