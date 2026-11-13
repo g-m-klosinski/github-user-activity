@@ -1,15 +1,27 @@
 package gmklosinski.githubuseractivity;
 
+import org.junit.jupiter.api.function.Executable;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ActivityTest {
 
     @org.junit.jupiter.api.Test
-    void fetch() {
-        final String username = "g-m-klosinski";
+    void creationWithArgumentDoesNotThrow() {
+        assertDoesNotThrow(() -> {
+            final String username = "g-m-klosinski";
+
+            new Activity(new String[]{username});
+        });
     }
 
     @org.junit.jupiter.api.Test
-    void prettyPrint() {
+    void creationWithoutArgumentsThrows() {
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> {
+                new Activity(new String[]{});
+            }
+        );
     }
 }
