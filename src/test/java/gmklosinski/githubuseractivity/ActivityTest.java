@@ -1,7 +1,5 @@
 package gmklosinski.githubuseractivity;
 
-import org.junit.jupiter.api.function.Executable;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class ActivityTest {
@@ -18,10 +16,8 @@ class ActivityTest {
     @org.junit.jupiter.api.Test
     void creationWithoutArgumentsThrows() {
         assertThrows(
-            IllegalArgumentException.class,
-            () -> {
-                new Activity(new String[]{});
-            }
+                IllegalArgumentException.class,
+                () -> new Activity(new String[]{})
         );
     }
 
