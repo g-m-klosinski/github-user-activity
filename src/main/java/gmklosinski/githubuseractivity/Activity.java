@@ -1,11 +1,14 @@
 package gmklosinski.githubuseractivity;
 
-import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
-import java.net.URL;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 public class Activity {
     private final String username;
+    private String activityString;
 
     public Activity(String[] args) {
         if (args.length != 1) {
@@ -19,11 +22,11 @@ public class Activity {
         System.out.println("activity viewer created");
     }
 
-    void fetch() throws IOException {
+    void fetch() throws IOException, InterruptedException {
         System.out.println("fetch invoked");
         final int per_page = 1;
         final String urlPattern =
-                "api.github.com/users/%s/events/public?per_page=%d";
+                "https://api.github.com/users/%s/events/public?per_page=%d";
 
         final String urlText = String.format(
                 urlPattern,
@@ -31,15 +34,24 @@ public class Activity {
                 per_page
         );
 
-        URL url = new URL(urlText);
-        HttpsURLConnection connection =
-                (HttpsURLConnection) url.openConnection();
+        final HttpClient client = HttpClient.newHttpClient();
 
-        connection.setRequestMethod("GET");
-        }
+        final HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(urlText))
+                .build();
+
+        HttpResponse<String> response = client.send(
+                request,
+                HttpResponse.BodyHandlers.ofString()
+        );
+
+        activityString = response.body();
+    }
 
     void prettyPrint() {
         System.out.println("printing invoked");
+
+        System.out.println(activityString);
     }
     
 }
