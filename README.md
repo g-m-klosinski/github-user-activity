@@ -20,5 +20,7 @@ The application will print the activity.
 The application is already functional and has
 the following roadmap:
 
-- [ ] Consider push events only
-- [ ] Count push events per week
+- [x] Consider push events only
+- [x] Count push events per week
+- [ ] Refactor long printing method
+- [ ] Test printing
