@@ -14,6 +14,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 public class Activity {
     private final String username;
@@ -43,18 +44,16 @@ public class Activity {
                 maxEvents
         );
 
-        HttpResponse<String> response;
-        try (HttpClient client = HttpClient.newHttpClient()) {
+        HttpClient client = HttpClient.newHttpClient();
 
-            final HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(urlText))
-                    .build();
+        final HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(urlText))
+                .build();
 
-            response = client.send(
-                    request,
-                    HttpResponse.BodyHandlers.ofString()
-            );
-        }
+        HttpResponse<String> response = client.send(
+                request,
+                HttpResponse.BodyHandlers.ofString()
+        );
 
         activityString = response.body();
     }
@@ -72,12 +71,10 @@ public class Activity {
 
         LocalDate now = LocalDate.now();
 
+        Optional<Integer> lastWeekRegistered = Optional.empty();
+
         while (eventIterator.hasNext()) {
             JsonNode event = eventIterator.next();
-
-            if (!event.get("type").asText().equals("PushEvent")) {
-                continue;
-            }
 
             String dateString = event.get("created_at").asText()
                     .substring(0, 10);
@@ -93,7 +90,11 @@ public class Activity {
                 break;
             }
 
-            weekAgoPushes.add((int) weeksElapsed);
+            lastWeekRegistered = Optional.of((int) weeksElapsed);
+
+            if (event.get("type").asText().equals("PushEvent")) {
+                weekAgoPushes.add((int) weeksElapsed);
+            }
         }
 
         if (weekAgoPushes.isEmpty()) {
@@ -113,7 +114,7 @@ public class Activity {
 
         for (
                 week = 0;
-                week <= weekAgoPushes.get(weekAgoPushes.size() - 1);
+                week <= lastWeekRegistered.get();
                 week++) {
             System.out.print(weekPushCount[week]);
         }
