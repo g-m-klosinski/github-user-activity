@@ -43,16 +43,18 @@ public class Activity {
                 maxEvents
         );
 
-        final HttpClient client = HttpClient.newHttpClient();
+        HttpResponse<String> response;
+        try (HttpClient client = HttpClient.newHttpClient()) {
 
-        final HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(urlText))
-                .build();
+            final HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(urlText))
+                    .build();
 
-        HttpResponse<String> response = client.send(
-                request,
-                HttpResponse.BodyHandlers.ofString()
-        );
+            response = client.send(
+                    request,
+                    HttpResponse.BodyHandlers.ofString()
+            );
+        }
 
         activityString = response.body();
     }
