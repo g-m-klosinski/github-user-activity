@@ -6,7 +6,7 @@ Created for
 [github-user-activity](https://roadmap.sh/projects/github-user-activity)
 project on [roadmap.sh](https://roadmap.sh).
 
-## Usage
+## Quick Start
 
 Pass the username as an argument, for example:
 ```bash
@@ -14,6 +14,11 @@ Pass the username as an argument, for example:
 ```
 
 The application will print the activity.
+
+## Output Format
+
+The application depicts the last half a year.
+It prints push event number for subsequent weeks.
 
 ## Roadmap
 
