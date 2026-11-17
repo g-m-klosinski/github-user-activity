@@ -20,5 +20,5 @@ The application will print the activity.
 The application is already functional and has
 the following roadmap:
 
-- [ ] Omit irrelevant information in the output
-- [ ] fetch more than one event
+- [ ] Consider push events only
+- [ ] Count push events per week
